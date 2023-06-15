@@ -5,7 +5,8 @@ const ProjectSchema = new mongoose.Schema({
 	client: String,
     access: String,
     time: Date,
-    favorite: Boolean
+    favorite: Boolean,
+    tasks: [],
 });
 
 const ProjectModel = mongoose.model('Project', ProjectSchema);

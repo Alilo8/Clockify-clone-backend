@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/task', require('./routes/readTaskRoute'));
+router.get('/task/:id', require('./routes/readTaskRoute'));
 router.post('/task', require('./routes/createTaskRoute'));
 router.delete('/task/:id', require('./routes/deleteTaskRoute'));
 router.put('/task/:id', require('./routes/updateTaskRoute'));
