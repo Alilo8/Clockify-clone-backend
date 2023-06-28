@@ -4,9 +4,10 @@ const ProjectSchema = new mongoose.Schema({
     status: String,
 	client: String,
     access: String,
-    time: Date,
+    time: Number,
     favorite: Boolean,
     tasks: [],
+    managerID: String,
 });
 
 const ProjectModel = mongoose.model('Project', ProjectSchema);

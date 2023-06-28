@@ -2,23 +2,22 @@ const TaskModel = require('../models/TaskModel')
 const ProjectModel = require('../models/ProjectModel')
 
 module.exports = async (req, res) => {
-    const {text, time, project, assignedTo} = req.body;
-    let update
-    if(project)
-	    update = await ProjectModel.updateOne({_id: project}, [{$set: {time: {$add: ["$time", time]}}}]);
-	
-	update = await TaskModel.updateOne({text: text, project: project}, [{$set: {time: {$add: ["$time", time]}}}]);
-	if(!update.modifiedCount){
-		update = await TaskModel.create({
-			text: text, 
-			time: time, 
-			project: project,
-			assignedTo: assignedTo
-		}).catch((err) => {
-		})
-		if(project)
-			update = await ProjectModel.updateOne({_id: project}, {$push: { tasks: update._id }})
-	}
-	console.log(update)
+    const {text, time, project, due, assignedTo, managerID} = req.body;	
+	const count = await TaskModel.count();
+	let update = await TaskModel.create({
+		_id: count+1,
+		text: text, 
+		time: time, 
+		project: project,
+		due: due,
+		assignedTo: assignedTo,
+		run: false,
+		managerID: managerID,
+	}).catch((err) => {
+	})
+
+	if(project)
+		update = await ProjectModel.updateOne({_id: project}, {$push: { tasks: update._id }})
+
     res.json(update);
 };
